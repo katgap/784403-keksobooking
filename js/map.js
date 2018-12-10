@@ -129,3 +129,36 @@ var Ads = [];
 for (var indexAd = 0; indexAd < numberOfAds; indexAd++) {
   Ads[indexAd] = renderAd();
 }
+
+var map = document.querySelector('.map');
+map.classList.remove('map--faded');
+
+var mark = document.querySelector('.map__pin');
+var positionInfo = mark.getBoundingClientRect();
+var widthOfMark = positionInfo.width;
+var heightOfMark = positionInfo.height;
+
+var listOfMarks = document.querySelector('.map__pins');
+var fragment = document.createDocumentFragment();
+
+var createMark = function (ad) {
+  var userAvatar = ad.author.avatar;
+  var xMark = ad.location.x + widthOfMark / 2;
+  var yMark = ad.location.y + heightOfMark;
+  var newMark = document.getElementById('pin').content.querySelector('.map__pin');
+  var element = newMark.cloneNode(true);
+  element.querySelector('img').setAttribute('src', userAvatar);
+  element.setAttribute('style', 'left: ' + xMark + 'px; top: ' + yMark + 'px;');
+
+  return element;
+};
+
+var drawMark = function (array, list) {
+  for (var i = 0; i < array.length; i++) {
+    var newElement = createMark(array[i]);
+    fragment.appendChild(newElement);
+  }
+  list.appendChild(fragment);
+};
+
+drawMark(Ads, listOfMarks);
