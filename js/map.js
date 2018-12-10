@@ -73,14 +73,24 @@ var renderAd = function () {
   arrayRandomTitles[arrayRandomTitles.length] = titles[indexTitle];
 
   // "address": строка, адрес предложения, представляет собой запись вида "{{location.x}}, {{location.y}}", например, "600, 350"
-  localOffer.address = '{ ' + localLocation.x + ' , ' + localLocation.y + ' }';
+  localOffer.address = localLocation.x + ', ' + localLocation.y;
 
   // "price": число, случайная цена от 1000 до 1000000
   localOffer.price = getRandom(1000, 1000000);
 
   // "type": строка с одним из четырёх фиксированных значений: palace, flat, house или bungalo
-  var indexType = getRandom(0, 3);
-  localOffer.type = types[indexType];
+  // var indexType = getRandom(0, 3);
+  // localOffer.type = types[indexType];
+  localOffer.type = '';
+  if (localOffer.title === 'Большая уютная квартира' || localOffer.title === 'Маленькая неуютная квартира') {
+    localOffer.type = types[1];
+  } else if (localOffer.title === 'Огромный прекрасный дворец' || localOffer.title === 'Маленький ужасный дворец') {
+    localOffer.type = types[0];
+  } else if (localOffer.title === 'Красивый гостевой домик' || localOffer.title === 'Некрасивый негостеприимный домик') {
+    localOffer.type = types[2];
+  } else if (localOffer.title === 'Уютное бунгало далеко от моря' || localOffer.title === 'Неуютное бунгало по колено в воде') {
+    localOffer.type = types[3];
+  }
 
   // "rooms": число, случайное количество комнат от 1 до 5
   localOffer.rooms = getRandom(1, 5);
@@ -130,6 +140,7 @@ for (var indexAd = 0; indexAd < numberOfAds; indexAd++) {
   Ads[indexAd] = renderAd();
 }
 
+// создание меток на карте
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
@@ -161,4 +172,65 @@ var drawMark = function (array, list) {
   list.appendChild(fragment);
 };
 
+// создание модального окна с инфрмацией об объявлении
+var createCard = function (ad) {
+  var card = document.getElementById('card').content.querySelector('.map__card');
+  var newCard = card.cloneNode(true);
+  newCard.querySelector('.popup__title').textContent = ad.offer.title;
+  newCard.querySelector('.popup__text--address').textContent = ad.offer.address;
+  newCard.querySelector('.popup__text--price').textContent = ad.offer.price + '₽/ночь';
+  // тип
+  var popupType = ad.offer.type;
+  if (popupType === 'flat') {
+    newCard.querySelector('.popup__type').textContent = 'Квартира';
+  } else if (popupType === 'bungalo') {
+    newCard.querySelector('.popup__type').textContent = 'Бунгало';
+  } else if (popupType === 'house') {
+    newCard.querySelector('.popup__type').textContent = 'Дом';
+  } else if (popupType === 'palace') {
+    newCard.querySelector('.popup__type').textContent = 'Дворец';
+  }
+  newCard.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей';
+  newCard.querySelector('.popup__text--time').textContent = 'Заезд после ' + ad.offer.checkin + ', выезд до ' + ad.offer.checkout;
+
+  // удобства
+  var listOfFeatures = newCard.querySelector('ul');
+  var featuresElement = newCard.querySelectorAll('li');
+  for (var l = 0; l < featuresElement.length; l++) {
+    listOfFeatures.removeChild(featuresElement[l]);
+  }
+  var featuresFragment = document.createDocumentFragment();
+  for (var k = 0; k < ad.offer.features.length; k++) {
+    for (var m = 0; m < arrayFeatures.length; m++) {
+      if (ad.offer.features[k] === arrayFeatures[m]) {
+        featuresFragment.appendChild(featuresElement[m]);
+      }
+    }
+  }
+  listOfFeatures.appendChild(featuresFragment);
+
+  newCard.querySelector('.popup__description').textContent = ad.offer.description;
+
+  // фото
+  var cardPhotos = newCard.querySelector('.popup__photos');
+  var photoElement = cardPhotos.querySelector('.popup__photo');
+  cardPhotos.removeChild(photoElement);
+  var photoFragment = document.createDocumentFragment();
+  var myNewPhoto;
+  var newSrc;
+  for (var h = 0; h < ad.offer.photos.length; h++) {
+    myNewPhoto = photoElement.cloneNode(true);
+    newSrc = ad.offer.photos[h];
+    myNewPhoto.src = newSrc;
+    photoFragment.appendChild(myNewPhoto);
+  }
+  cardPhotos.appendChild(photoFragment);
+
+  newCard.querySelector('img').setAttribute('src', ad.author.avatar);
+
+  listOfMarks.insertAdjacentElement('afterend', newCard);
+};
+
 drawMark(Ads, listOfMarks);
+
+createCard(Ads[0]);
