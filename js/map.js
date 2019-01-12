@@ -1,5 +1,11 @@
 'use strict';
 
+var WIDTH_MAP = 1200;
+var HEIGHT_MAP = 500;
+
+var WIDTH_MARK = 62;
+var HEIGHT_MARK = 84;
+
 // var titles = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 
 // var types = ['palace', 'flat', 'house', 'bungalo'];
@@ -204,7 +210,8 @@ for (var indexAd = 0; indexAd < numberOfAds; indexAd++) {
 
 // создание меток на карте
 var map = document.querySelector('.map');
-map.classList.remove('map--faded');
+
+// map.classList.remove('map--faded');
 
 var mark = document.querySelector('.map__pin');
 var positionInfo = mark.getBoundingClientRect();
@@ -293,6 +300,96 @@ var createCard = function (ad) {
   listOfMarks.insertAdjacentElement('afterend', newCard);
 };
 
-drawMark(Ads, listOfMarks);
+// drawMark(Ads, listOfMarks);
 
-createCard(Ads[0]);
+// createCard(Ads[0]);
+
+// _________________________________________
+// Задание "Личный проект: подробности"
+
+var adForm = document.querySelector('.ad-form');
+var mapForm = document.querySelector('.map__filters');
+var inputsOfForm = adForm.querySelectorAll('input');
+var textareasOfForm = adForm.querySelectorAll('textarea');
+var buttonsOfForm = adForm.querySelectorAll('button');
+var selectsOfForm = adForm.querySelectorAll('select');
+var inputsOfMapForm = mapForm.querySelectorAll('input');
+var selectsOfMapForm = mapForm.querySelectorAll('select');
+
+// заблокировать поле
+var lockField = function (field) {
+  field.setAttribute('disabled', true);
+};
+
+// разблокировать поле
+var unlockField = function (field) {
+  field.removeAttribute('disabled');
+};
+
+// вычисление начальных значений метки
+var initialX = WIDTH_MAP / 2;
+var initialY = 130 + HEIGHT_MAP / 2 + HEIGHT_MARK / 2;
+
+// показать адрес в поле
+var showAddress = function (X, Y) {
+  document.getElementById('address').value = X + ', ' + Y;
+};
+
+showAddress(initialX, initialY);
+
+// неактивное состояние
+var switchToInactiveState = function () {
+  for (var indexInputs = 0; indexInputs < inputsOfForm.length; indexInputs++) {
+    lockField(inputsOfForm[indexInputs]);
+  }
+  for (var indexSelects = 0; indexSelects < selectsOfForm.length; indexSelects++) {
+    lockField(selectsOfForm[indexSelects]);
+  }
+  for (var indexTextareas = 0; indexTextareas < textareasOfForm.length; indexTextareas++) {
+    lockField(textareasOfForm[indexTextareas]);
+  }
+  for (var indexButtons = 0; indexButtons < buttonsOfForm.length; indexButtons++) {
+    lockField(buttonsOfForm[indexButtons]);
+  }
+  for (var indexMapInputs = 0; indexMapInputs < inputsOfMapForm.length; indexMapInputs++) {
+    lockField(inputsOfMapForm[indexMapInputs]);
+  }
+  for (var indexMapSelects = 0; indexMapSelects < selectsOfMapForm.length; indexMapSelects++) {
+    lockField(selectsOfMapForm[indexMapSelects]);
+  }
+};
+
+switchToInactiveState();
+
+// активное состояние
+var mapPinMain = document.querySelector('.map__pin--main');
+
+var switchToActiveState = function () {
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  for (var indexInputs = 0; indexInputs < inputsOfForm.length; indexInputs++) {
+    unlockField(inputsOfForm[indexInputs]);
+  }
+  for (var indexSelects = 0; indexSelects < selectsOfForm.length; indexSelects++) {
+    unlockField(selectsOfForm[indexSelects]);
+  }
+  for (var indexTextareas = 0; indexTextareas < textareasOfForm.length; indexTextareas++) {
+    unlockField(textareasOfForm[indexTextareas]);
+  }
+  for (var indexButtons = 0; indexButtons < buttonsOfForm.length; indexButtons++) {
+    unlockField(buttonsOfForm[indexButtons]);
+  }
+  for (var indexMapInputs = 0; indexMapInputs < inputsOfMapForm.length; indexMapInputs++) {
+    unlockField(inputsOfMapForm[indexMapInputs]);
+  }
+  for (var indexMapSelects = 0; indexMapSelects < selectsOfMapForm.length; indexMapSelects++) {
+    unlockField(selectsOfMapForm[indexMapSelects]);
+  }
+};
+
+// при нажатии на метку переход в активное состояние
+var mouseup = mapPinMain.addEventListener('click', function () {
+  switchToActiveState();
+  showAddress(initialX, initialY);
+});
+
