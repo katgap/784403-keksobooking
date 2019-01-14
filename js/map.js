@@ -397,11 +397,11 @@ var mouseup = mapPinMain.addEventListener('click', function () {
 // ___________________________________
 // Задание: "Личный проект: доверяй, но проверяй"
 
-//var selectedType = document.getElementById('type');
+var selectedType = document.getElementById('type');
 
 // установка минимальной цены
-/*var chooseMinPrice = function () {
-  var selectedPrice = document.getElementById('price'); 
+var chooseMinPrice = function () {
+  var selectedPrice = document.getElementById('price');
   if (selectedType.value === 'bungalo') {
     selectedPrice.min = 0;
     selectedPrice.placeholder = '1000';
@@ -414,8 +414,8 @@ var mouseup = mapPinMain.addEventListener('click', function () {
   } else if (selectedType.value === 'palace') {
     selectedPrice.min = 10000;
     selectedPrice.placeholder = '15000';
-  } 
-}
+  }
+};
 
 chooseMinPrice();
 selectedType.addEventListener('change', function () {
@@ -428,14 +428,14 @@ var timeOut = document.getElementById('timeout');
 
 var chooseTimeIn = function () {
   timeOut.value = timeIn.value;
-}
+};
 var chooseTimeOut = function () {
   timeIn.value = timeOut.value;
-}
+};
 
 timeIn.addEventListener('change', function () {
   chooseTimeIn();
 });
 timeOut.addEventListener('change', function () {
   chooseTimeOut();
-});*/
+});
