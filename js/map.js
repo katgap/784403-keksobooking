@@ -388,10 +388,58 @@ var switchToActiveState = function () {
 };
 
 // при нажатии на метку переход в активное состояние
-var mouseup = mapPinMain.addEventListener('click', function () {
+/* var mouseup = mapPinMain.addEventListener('click', function () {
   switchToActiveState();
   showAddress(initialX, initialY);
   drawMark(Ads, listOfMarks);
+});*/
+
+// ___________________________________
+// Задание: "Личный проект: максимум подвижности"
+
+mapPinMain.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  var onMouseMove = function (moveEvt) {
+    moveEvt.preventDefault();
+
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    if ((mapPinMain.offsetTop - shift.y) >= 130 && (mapPinMain.offsetTop - shift.y) <= 630) {
+      mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
+      mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
+
+      initialX = (mapPinMain.offsetLeft - shift.x) + WIDTH_MARK / 2;
+      initialY = (mapPinMain.offsetTop - shift.y) + HEIGHT_MARK;
+    }
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+
+    map.removeEventListener('mousemove', onMouseMove);
+    map.removeEventListener('mouseup', onMouseUp);
+
+    switchToActiveState();
+    showAddress(initialX, initialY);
+    drawMark(Ads, listOfMarks);
+  };
+
+  map.addEventListener('mousemove', onMouseMove);
+  map.addEventListener('mouseup', onMouseUp);
 });
 
 // ___________________________________
