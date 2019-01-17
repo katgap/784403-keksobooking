@@ -411,21 +411,26 @@ mapPinMain.addEventListener('mousedown', function (evt) {
     var shift = {
       x: startCoords.x - moveEvt.clientX,
       y: startCoords.y - moveEvt.clientY
-    };
-
+    }
+  
     startCoords = {
       x: moveEvt.clientX,
       y: moveEvt.clientY
     };
 
-    if ((mapPinMain.offsetTop - shift.y) >= 130 && (mapPinMain.offsetTop - shift.y) <= 630) {
-      mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
-      mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
+  
+    if (moveEvt.clientX >= map.offsetLeft && moveEvt.clientX <= (moveEvt.clientX + map.offsetWidth) 
+    && moveEvt.clientY >= (map.offsetTop + 130) && moveEvt.clientY <= (map.offsetTop + map.offsetHeight - 120)
+    && (mapPinMain.offsetTop - shift.y + HEIGHT_MARK) >= 130 && (mapPinMain.offsetTop - shift.y + HEIGHT_MARK) <= 630 
+    && (mapPinMain.offsetLeft - shift.x) >= 0 && (mapPinMain.offsetLeft - shift.x) <= map.offsetWidth - WIDTH_MARK) {
+        mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
+        mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
 
-      initialX = (mapPinMain.offsetLeft - shift.x) + WIDTH_MARK / 2;
-      initialY = (mapPinMain.offsetTop - shift.y) + HEIGHT_MARK;
+        initialX = (mapPinMain.offsetLeft - shift.x) + WIDTH_MARK / 2;
+        initialY = (mapPinMain.offsetTop - shift.y) + HEIGHT_MARK;
     }
   };
+
 
   var onMouseUp = function (upEvt) {
     upEvt.preventDefault();
@@ -440,6 +445,7 @@ mapPinMain.addEventListener('mousedown', function (evt) {
 
   map.addEventListener('mousemove', onMouseMove);
   map.addEventListener('mouseup', onMouseUp);
+  
 });
 
 // ___________________________________
