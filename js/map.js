@@ -1,14 +1,16 @@
 'use strict';
 
 var WIDTH_MAP = 1200;
-var HEIGHT_MAP = 500;
+var HEIGHT_MAP = 750;
 
-var WIDTH_MARK = 62;
-var HEIGHT_MARK = 84;
+var WIDTH_MARK = 65;
+var HEIGHT_MARK = 87;
 
 // var titles = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 
 // var types = ['palace', 'flat', 'house', 'bungalo'];
+
+// data.js
 
 var types = {
   flat: {
@@ -42,6 +44,8 @@ var arrayRandomTitlesPalace = [];
 var arrayRandomTitlesHouse = [];
 var arrayRandomTitlesBungalo = [];
 
+// auxiliary-functions.js
+
 var getRandom = function (min, max) {
   return Math.floor(min + Math.random() * (max - min + 1));
 };
@@ -67,6 +71,8 @@ var findDuplicateValue = function (array, value) {
   }
   return flag;
 };
+
+// render-ad.js
 
 var renderAd = function () {
   // общий объект
@@ -183,7 +189,6 @@ var renderAd = function () {
   }
   localOffer.features = myFeatures;
 
-
   // "description": пустая строка
   localOffer.description = '';
 
@@ -197,34 +202,31 @@ var renderAd = function () {
   return localAd;
 };
 
+// ads.js
+
 var numberOfAds = 8;
 var Ads = [];
 for (var indexAd = 0; indexAd < numberOfAds; indexAd++) {
   Ads[indexAd] = renderAd();
 }
 
-// console.log(arrayRandomTitlesFlat);
-// console.log(arrayRandomTitlesPalace);
-// console.log(arrayRandomTitlesHouse);
-// console.log(arrayRandomTitlesBungalo);
-
 // создание меток на карте
+
+// pin.js
+
 var map = document.querySelector('.map');
-
-// map.classList.remove('map--faded');
-
-var mark = document.querySelector('.map__pin');
-var positionInfo = mark.getBoundingClientRect();
-var widthOfMark = positionInfo.width;
-var heightOfMark = positionInfo.height;
+// var mark = document.querySelector('.map__pin');
+// var positionInfo = mark.getBoundingClientRect();
+// var WIDTH_MARK = positionInfo.width;
+// var HEIGHT_MARK = positionInfo.height;
 
 var listOfMarks = document.querySelector('.map__pins');
 var fragment = document.createDocumentFragment();
 
 var createMark = function (ad) {
   var userAvatar = ad.author.avatar;
-  var xMark = ad.location.x + widthOfMark / 2;
-  var yMark = ad.location.y + heightOfMark;
+  var xMark = ad.location.x + WIDTH_MARK / 2;
+  var yMark = ad.location.y + HEIGHT_MARK;
   var newMark = document.getElementById('pin').content.querySelector('.map__pin');
   var element = newMark.cloneNode(true);
   element.querySelector('img').setAttribute('src', userAvatar);
@@ -241,8 +243,10 @@ var drawMark = function (array, list) {
   list.appendChild(fragment);
 };
 
+// create-card.js
+
 // создание модального окна с инфрмацией об объявлении
-var createCard = function (ad) {
+/* var createCard = function (ad) {
   var card = document.getElementById('card').content.querySelector('.map__card');
   var newCard = card.cloneNode(true);
   newCard.querySelector('.popup__title').textContent = ad.offer.title;
@@ -298,13 +302,13 @@ var createCard = function (ad) {
   newCard.querySelector('img').setAttribute('src', ad.author.avatar);
 
   listOfMarks.insertAdjacentElement('afterend', newCard);
-};
+};*/
 
 // drawMark(Ads, listOfMarks);
 
 // createCard(Ads[0]);
 
-// _________________________________________
+// switching-state.js
 // Задание "Личный проект: подробности"
 
 var adForm = document.querySelector('.ad-form');
@@ -394,8 +398,10 @@ var switchToActiveState = function () {
   drawMark(Ads, listOfMarks);
 });*/
 
-// ___________________________________
+// drag-and-drop.js
 // Задание: "Личный проект: максимум подвижности"
+
+// var mapPinMain = document.querySelector('.map__pin--main');
 
 mapPinMain.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
@@ -411,26 +417,24 @@ mapPinMain.addEventListener('mousedown', function (evt) {
     var shift = {
       x: startCoords.x - moveEvt.clientX,
       y: startCoords.y - moveEvt.clientY
-    }
-  
+    };
+
     startCoords = {
       x: moveEvt.clientX,
       y: moveEvt.clientY
     };
 
-  
-    if (moveEvt.clientX >= map.offsetLeft && moveEvt.clientX <= (moveEvt.clientX + map.offsetWidth) 
+    if (moveEvt.clientX >= map.offsetLeft && moveEvt.clientX <= (moveEvt.clientX + map.offsetWidth)
     && moveEvt.clientY >= (map.offsetTop + 130) && moveEvt.clientY <= (map.offsetTop + map.offsetHeight - 120)
-    && (mapPinMain.offsetTop - shift.y + HEIGHT_MARK) >= 130 && (mapPinMain.offsetTop - shift.y + HEIGHT_MARK) <= 630 
+    && (mapPinMain.offsetTop - shift.y + HEIGHT_MARK) >= 130 && (mapPinMain.offsetTop - shift.y + HEIGHT_MARK) <= 630
     && (mapPinMain.offsetLeft - shift.x) >= 0 && (mapPinMain.offsetLeft - shift.x) <= map.offsetWidth - WIDTH_MARK) {
-        mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
-        mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
+      mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
+      mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
 
-        initialX = (mapPinMain.offsetLeft - shift.x) + WIDTH_MARK / 2;
-        initialY = (mapPinMain.offsetTop - shift.y) + HEIGHT_MARK;
+      initialX = (mapPinMain.offsetLeft - shift.x) + WIDTH_MARK / 2;
+      initialY = (mapPinMain.offsetTop - shift.y) + HEIGHT_MARK;
     }
   };
-
 
   var onMouseUp = function (upEvt) {
     upEvt.preventDefault();
@@ -445,10 +449,9 @@ mapPinMain.addEventListener('mousedown', function (evt) {
 
   map.addEventListener('mousemove', onMouseMove);
   map.addEventListener('mouseup', onMouseUp);
-  
 });
 
-// ___________________________________
+// form.js
 // Задание: "Личный проект: доверяй, но проверяй"
 
 var selectedType = document.getElementById('type');
