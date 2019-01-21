@@ -21,8 +21,8 @@
     HEIGHT_MARK: 87,
     createMark: function (ad) {
       var userAvatar = ad.author.avatar;
-      var xMark = ad.location.x + window.mark.WIDTH_MARK / 2;
-      var yMark = ad.location.y + window.mark.HEIGHT_MARK;
+      var xMark = ad.location.x - window.mark.WIDTH_MARK / 2;
+      var yMark = ad.location.y - window.mark.HEIGHT_MARK;
       var newMark = document.getElementById('pin').content.querySelector('.map__pin');
       var element = newMark.cloneNode(true);
       element.querySelector('img').setAttribute('src', userAvatar);

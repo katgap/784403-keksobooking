@@ -4,8 +4,8 @@
   var mapPinMain = document.querySelector('.map__pin--main');
   var localMap = window.mark.map;
 
-  var currentInitialX = window.mark.initialX;
-  var currentInitialY = window.mark.initialY;
+  var currentInitialX = window.mark.WIDTH_MAP / 2;
+  var currentInitialY = 130 + window.mark.HEIGHT_MAP / 2 + window.mark.HEIGHT_MARK / 2;
 
   mapPinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
