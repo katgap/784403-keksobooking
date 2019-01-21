@@ -3,9 +3,9 @@
 (function () {
 
   var successHandler = function (pins) {
-    var numberOfAds = 8;
+    //var numberOfAds = 8;
     var localAds = [];
-    for (var indexAd = 0; indexAd < numberOfAds; indexAd++) {
+    for (var indexAd = 0; indexAd < pins.length; indexAd++) {
       localAds[indexAd] = window.renderAd(pins[indexAd]);
     }
     window.ads = localAds;
