@@ -3,7 +3,7 @@
 (function () {
 
   var successHandler = function (pins) {
-    //var numberOfAds = 8;
+    // var numberOfAds = 8;
     var localAds = [];
     for (var indexAd = 0; indexAd < pins.length; indexAd++) {
       localAds[indexAd] = window.renderAd(pins[indexAd]);
