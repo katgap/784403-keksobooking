@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+
+  // var ESC_KEYCODE = 27;
   // создание модального окна с инфрмацией об объявлении
   window.createCard = function (ad) {
     var card = document.getElementById('card').content.querySelector('.map__card');
@@ -9,16 +11,16 @@
     newCard.querySelector('.popup__text--address').textContent = ad.offer.address;
     newCard.querySelector('.popup__text--price').textContent = ad.offer.price + '₽/ночь';
     // тип
-    var popupType = ad.offer.type;
-    if (popupType === 'flat') {
-      newCard.querySelector('.popup__type').textContent = 'Квартира';
-    } else if (popupType === 'bungalo') {
+    // var popupType = ad.offer.type;
+    // if (popupType === 'flat') {
+    newCard.querySelector('.popup__type').textContent = ad.offer.type;
+    /* } else if (popupType === 'bungalo') {
       newCard.querySelector('.popup__type').textContent = 'Бунгало';
     } else if (popupType === 'house') {
       newCard.querySelector('.popup__type').textContent = 'Дом';
     } else if (popupType === 'palace') {
       newCard.querySelector('.popup__type').textContent = 'Дворец';
-    }
+    } */
     newCard.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей';
     newCard.querySelector('.popup__text--time').textContent = 'Заезд после ' + ad.offer.checkin + ', выезд до ' + ad.offer.checkout;
     // удобства
@@ -29,11 +31,7 @@
     }
     var featuresFragment = document.createDocumentFragment();
     for (var k = 0; k < ad.offer.features.length; k++) {
-      for (var m = 0; m < window.data.arrayFeatures.length; m++) {
-        if (ad.offer.features[k] === window.data.arrayFeatures[m]) {
-          featuresFragment.appendChild(featuresElement[m]);
-        }
-      }
+      featuresFragment.appendChild(featuresElement[k]);
     }
     listOfFeatures.appendChild(featuresFragment);
     newCard.querySelector('.popup__description').textContent = ad.offer.description;
@@ -53,6 +51,17 @@
     cardPhotos.appendChild(photoFragment);
     newCard.querySelector('img').setAttribute('src', ad.author.avatar);
     window.mark.listOfMarks.insertAdjacentElement('afterend', newCard);
+    newCard.classList.add('hidden');
+
+    var cardClose = newCard.querySelector('.popup__close');
+    closePopup(cardClose, newCard);
+    return newCard;
+  };
+
+  var closePopup = function (popupClose, popup) {
+    popupClose.addEventListener('click', function () {
+      popup.classList.add('hidden');
+    });
   };
 })();
 

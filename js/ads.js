@@ -10,7 +10,6 @@
     }
     window.ads = localAds;
   };
-
   var errorHandler = function (errorMessage) {
     var node = document.getElementById('error').content.querySelector('.error');
     var newElement = node.cloneNode(true);

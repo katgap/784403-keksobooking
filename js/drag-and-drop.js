@@ -48,11 +48,33 @@
 
       window.switchingState.switchToActiveState();
       window.switchingState.showAddress(currentInitialX, currentInitialY);
-      window.mark.drawMark(window.ads, window.mark.listOfMarks);
+      // window.mark.drawMark(window.marks, window.mark.listOfMarks);
+
+      for (var i = 1; i < window.pins.length; i++) {
+        if (window.pins[i].classList.contains('hidden')) {
+          window.pins[i].classList.remove('hidden');
+        }
+      }
     };
+
+    window.mark.marks = window.mark.createArrayOfMark(window.ads);
+    window.mark.drawMark(window.mark.marks, window.mark.listOfMarks);
+
+    for (var indexAd = 0; indexAd < window.ads.length; indexAd++) {
+      var newCard = window.createCard(window.ads[indexAd]);
+      window.mark.listCards[indexAd] = newCard;
+      window.mark.listCardsTwo[window.mark.listCardsTwo.length] = newCard;
+    }
+
+    window.pins = document.querySelectorAll('.map__pin');
+
+    for (var indexPin = 1; indexPin < window.pins.length; indexPin++) {
+      window.mark.showCard(window.pins[indexPin], window.mark.listCards, window.mark.listCardsTwo, window.pins);
+    }
 
     localMap.addEventListener('mousemove', onMouseMove);
     localMap.addEventListener('mouseup', onMouseUp);
+
   });
 })();
 
