@@ -2,7 +2,7 @@
 
 (function () {
 
-  // var ESC_KEYCODE = 27;
+  var ESC_KEYCODE = 27;
   // создание модального окна с инфрмацией об объявлении
   window.createCard = function (ad) {
     var card = document.getElementById('card').content.querySelector('.map__card');
@@ -55,12 +55,21 @@
 
     var cardClose = newCard.querySelector('.popup__close');
     closePopup(cardClose, newCard);
+    closePopupEsc(newCard);
     return newCard;
   };
 
   var closePopup = function (popupClose, popup) {
     popupClose.addEventListener('click', function () {
       popup.classList.add('hidden');
+    });
+  };
+
+  var closePopupEsc = function (popup) {
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        popup.classList.add('hidden');
+      }
     });
   };
 })();
