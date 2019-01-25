@@ -39,6 +39,35 @@
         showPin();
       }
     });
+
+    /* var selectedHousingPrice = document.getElementById('housing-price');
+    selectedHousingPrice.addEventListener('change', function () {
+      var housingType = document.getElementById('housing-type').value;
+      if (housingType === 'any') {
+        hidePin();
+        for (var i = 1; i < window.pins.length; i++) {
+          window.pins[i].classList.remove('map__pin');
+        }
+        window.pins = [];
+        filterByQuantity(window.ads);
+        window.show(window.newAds);
+        window.mark.marks = [];
+        showPin();
+      } else {
+        var adsWithType = window.ads.filter(function (ad) {
+          return ad.offer.type === housingType;
+        });
+        hidePin();
+        for (var j = 1; j < window.pins.length; j++) {
+          window.pins[j].classList.remove('map__pin');
+        }
+        window.pins = [];
+        filterByQuantity(adsWithType);
+        window.show(window.newAds);
+        window.mark.marks = [];
+        showPin();
+      }
+    }); */
   };
 
   var errorHandler = function (errorMessage) {
