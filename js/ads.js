@@ -14,12 +14,11 @@
     var selectedHousingType = document.getElementById('housing-type');
     selectedHousingType.addEventListener('change', function () {
       var housingType = document.getElementById('housing-type').value;
-      console.log(housingType);
       if (housingType === 'any') {
         hidePin();
         for (var i = 1; i < window.pins.length; i++) {
-            window.pins[i].classList.remove('map__pin');
-        };
+          window.pins[i].classList.remove('map__pin');
+        }
         window.pins = [];
         filterByQuantity(window.ads);
         window.show(window.newAds);
@@ -27,13 +26,12 @@
         showPin();
       } else {
         var adsWithType = window.ads.filter(function (ad) {
-          console.log(ad.offer.type);
           return ad.offer.type === housingType;
         });
         hidePin();
-        for (var i = 1; i < window.pins.length; i++) {
-            window.pins[i].classList.remove('map__pin');
-        };
+        for (var j = 1; j < window.pins.length; j++) {
+          window.pins[j].classList.remove('map__pin');
+        }
         window.pins = [];
         filterByQuantity(adsWithType);
         window.show(window.newAds);
@@ -83,24 +81,24 @@
     }
     for (var i = 0; i < numberOfAds; i++) {
       window.newAds[i] = getRandomElement(array, window.newAds);
-    };
-  }
+    }
+  };
 
   var hidePin = function () {
     for (var i = 1; i < window.pins.length; i++) {
       if (!window.pins[i].classList.contains('hidden')) {
         window.pins[i].classList.add('hidden');
       }
-    };
-  }
+    }
+  };
 
   var showPin = function () {
     for (var i = 1; i < window.pins.length; i++) {
       if (window.pins[i].classList.contains('hidden')) {
         window.pins[i].classList.remove('hidden');
       }
-    };
-  }
+    }
+  };
 
   window.load(successHandler, errorHandler);
 })();

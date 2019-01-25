@@ -65,7 +65,7 @@
 
   });
 
-  window.show = function(array) {;
+  window.show = function (array) {
     window.mark.marks = window.mark.createArrayOfMark(array);
     window.mark.drawMark(window.mark.marks, window.mark.listOfMarks);
 

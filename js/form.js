@@ -44,7 +44,7 @@
     chooseTimeOut();
   });
 
-  /*var form = document.querySelector('.ad-form');
+  /* var form = document.querySelector('.ad-form');
   var notice = document.querySelector('.notice');
 
   form.addEventListener('submit', function (evt) {
