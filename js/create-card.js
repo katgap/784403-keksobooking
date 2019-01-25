@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-
   var ESC_KEYCODE = 27;
   // создание модального окна с инфрмацией об объявлении
   window.createCard = function (ad) {

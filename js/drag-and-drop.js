@@ -57,7 +57,16 @@
       }
     };
 
-    window.mark.marks = window.mark.createArrayOfMark(window.ads);
+    window.show(window.newAds);
+    window.mark.marks = [];
+
+    localMap.addEventListener('mousemove', onMouseMove);
+    localMap.addEventListener('mouseup', onMouseUp);
+
+  });
+
+  window.show = function(array) {;
+    window.mark.marks = window.mark.createArrayOfMark(array);
     window.mark.drawMark(window.mark.marks, window.mark.listOfMarks);
 
     for (var indexAd = 0; indexAd < window.ads.length; indexAd++) {
@@ -71,10 +80,6 @@
     for (var indexPin = 1; indexPin < window.pins.length; indexPin++) {
       window.mark.showCard(window.pins[indexPin], window.mark.listCards, window.mark.listCardsTwo, window.pins);
     }
-
-    localMap.addEventListener('mousemove', onMouseMove);
-    localMap.addEventListener('mouseup', onMouseUp);
-
-  });
+  };
 })();
 

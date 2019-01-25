@@ -3,19 +3,12 @@
 (function () {
   var localMap = document.querySelector('.map');
   var localListOfMarks = document.querySelector('.map__pins');
-  // var localMark = document.querySelector('.map__pin');
-  // var positionInfoMap = localMap.getBoundingClientRect();
-  // var positionInfoMark = localMark.getBoundingClientRect();
   var fragment = document.createDocumentFragment();
 
 
   window.mark = {
     map: localMap,
     listOfMarks: localListOfMarks,
-    // WIDTH_MAP: positionInfoMap.width,
-    // HEIGHT_MAP: positionInfoMap.width,
-    // WIDTH_MARK: positionInfoMark.width,
-    // HEIGHT_MARK: positionInfoMark.height,
     WIDTH_MAP: 1200,
     HEIGHT_MAP: 750,
     WIDTH_MARK: 65,
@@ -49,9 +42,9 @@
       }
       list.appendChild(fragment);
     },
-    showInfo: function (ad) {
-      window.mark.listOfMarks.insertAdjacentElement('afterend', ad);
-    },
+    // showInfo: function (ad) {
+    //  window.mark.listOfMarks.insertAdjacentElement('afterend', ad);
+    // },
     showCard: function (pin, listCards, listCardsTwo, pins) {
       pin.addEventListener('click', function () {
         for (var i = 0; i < listCards.length; i++) {
@@ -70,9 +63,12 @@
           }
         }
         var element = pin.cloneNode(true);
-        var woa = element.querySelector('img').getAttribute('src');
+        var currentElementX = element.style.left;
+        var currentElementY = element.style.top;
         for (var l = 0; l < listCards.length; l++) {
-          if (window.ads[l].author.avatar === woa) {
+          var currentX = window.ads[l].location.x - window.mark.WIDTH_MARK / 2 + 'px';
+          var currentY = window.ads[l].location.y - window.mark.HEIGHT_MARK + 'px';
+          if (currentX === currentElementX && currentY === currentElementY) {
             listCards[l].classList.remove('hidden');
             pin.classList.add('map__pin--active');
           }

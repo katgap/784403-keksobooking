@@ -43,5 +43,15 @@
   timeOut.addEventListener('change', function () {
     chooseTimeOut();
   });
+
+  /*var form = document.querySelector('.ad-form');
+  var notice = document.querySelector('.notice');
+
+  form.addEventListener('submit', function (evt) {
+    window.upload(new FormData(form), function (response) {
+      notice.classList.add('hidden');
+    });
+    evt.preventDefault();
+  });*/
 })();
 
