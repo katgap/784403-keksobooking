@@ -10,16 +10,7 @@
     newCard.querySelector('.popup__text--address').textContent = ad.offer.address;
     newCard.querySelector('.popup__text--price').textContent = ad.offer.price + '₽/ночь';
     // тип
-    // var popupType = ad.offer.type;
-    // if (popupType === 'flat') {
     newCard.querySelector('.popup__type').textContent = ad.offer.type;
-    /* } else if (popupType === 'bungalo') {
-      newCard.querySelector('.popup__type').textContent = 'Бунгало';
-    } else if (popupType === 'house') {
-      newCard.querySelector('.popup__type').textContent = 'Дом';
-    } else if (popupType === 'palace') {
-      newCard.querySelector('.popup__type').textContent = 'Дворец';
-    } */
     newCard.querySelector('.popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей';
     newCard.querySelector('.popup__text--time').textContent = 'Заезд после ' + ad.offer.checkin + ', выезд до ' + ad.offer.checkout;
     // удобства
@@ -53,8 +44,10 @@
     newCard.classList.add('hidden');
 
     var cardClose = newCard.querySelector('.popup__close');
+    var filters = document.querySelector('.map__filters');
     closePopup(cardClose, newCard);
     closePopupEsc(newCard);
+    closePopupFilter(filters, newCard);
     return newCard;
   };
 
@@ -69,6 +62,12 @@
       if (evt.keyCode === ESC_KEYCODE) {
         popup.classList.add('hidden');
       }
+    });
+  };
+
+  var closePopupFilter = function (popupClose, popup) {
+    popupClose.addEventListener('click', function () {
+      popup.classList.add('hidden');
     });
   };
 })();

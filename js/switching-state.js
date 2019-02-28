@@ -33,6 +33,12 @@
 
     // неактивное состояние
     switchToInactiveState: function () {
+      if (!window.mark.map.classList.contains('map--faded')) {
+        window.mark.map.classList.add('map--faded');
+      }
+      if (!adForm.classList.contains('ad-form--disabled')) {
+        adForm.classList.add('ad-form--disabled');
+      }
       for (var indexInputs = 0; indexInputs < inputsOfForm.length; indexInputs++) {
         lockField(inputsOfForm[indexInputs]);
       }

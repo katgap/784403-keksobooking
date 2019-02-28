@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var ESC_KEYCODE = 27;
   var selectedType = document.getElementById('type');
 
   // установка минимальной цены
@@ -44,14 +45,71 @@
     chooseTimeOut();
   });
 
-  /* var form = document.querySelector('.ad-form');
-  var notice = document.querySelector('.notice');
+  // синхронизация комнат и гостей
+  var selectedRooms = document.getElementById('room_number');
+  var selectedGuests = document.getElementById('capacity');
+
+  var synchronizeTheNumberOfRoomsAndGuests = function () {
+    if (selectedRooms.value !== selectedGuests.value) {
+      selectedRooms.setCustomValidity('Количество комнат должно совпадать с количеством гостей');
+    } else {
+      selectedRooms.setCustomValidity('');
+    }
+  };
+
+  selectedRooms.addEventListener('change', function () {
+    synchronizeTheNumberOfRoomsAndGuests();
+  });
+  selectedGuests.addEventListener('change', function () {
+    synchronizeTheNumberOfRoomsAndGuests();
+  });
+
+
+  var form = document.querySelector('.ad-form');
+  var mapPinMain = document.querySelector('.map__pin--main');
 
   form.addEventListener('submit', function (evt) {
     window.upload(new FormData(form), function (response) {
-      notice.classList.add('hidden');
+      var node = document.getElementById('success').content.querySelector('.success');
+      var newElement = node.cloneNode(true);
+      window.switchingState.switchToInactiveState();
+      document.querySelector('main').insertAdjacentElement('afterbegin', newElement);
+      resetForm();
+      deletePins();
+      window.switchingState.switchToInactiveState();
+      window.switchingState.showAddress(window.switchingState.initialX, window.switchingState.initialY);
+      mapPinMain.style.left = 570 + 'px';
+      mapPinMain.style.top = 375 + 'px';
+      closeMessageEsc(newElement);
+      closeMessage(newElement);
     });
     evt.preventDefault();
-  });*/
+  });
+
+  var resetForm = function () {
+    form.reset();
+  };
+
+  var deletePins = function () {
+    for (var i = 1; i < window.pins.length; i++) {
+      if (!window.pins[i].classList.contains('hidden')) {
+        window.pins[i].classList.add('hidden');
+      }
+    }
+  };
+
+  var closeMessageEsc = function (element) {
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        element.classList.add('hidden');
+      }
+    });
+  };
+
+  var closeMessage = function (element) {
+    document.addEventListener('click', function () {
+      element.classList.add('hidden');
+    });
+  };
 })();
 
